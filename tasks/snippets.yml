@@ -1,0 +1,20 @@
+---
+- name: Ensure dir of snippets exists
+  file:
+    path: /etc/nginx/snippets
+    state: directory
+    mode: '0755'
+
+- name: Copy snippet files
+  template:
+    src: "snippets/{{ item }}"
+    dest: "/etc/nginx/snippets/{{ item | splitext | first }}"
+    mode: '0644'
+  with_items:
+    - cors.conf.j2
+    - proxy.conf.j2
+    - proxy_cache.conf.j2
+    - ssl.conf.j2
+    - security.conf.j2
+    - websocket.conf.j2
+
